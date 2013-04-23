@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BCryptHashGenerator.Models;
 
 namespace BCryptHashGenerator.Controllers
 {
@@ -11,8 +12,22 @@ namespace BCryptHashGenerator.Controllers
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            return View(new HomeModel());
+        }
 
-            return View();
+        [HttpPost]
+        public ActionResult Index(HomeModel model)
+        {
+            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+
+            if (model == null || !ModelState.IsValid)
+            {
+                return View(new HomeModel());
+            }
+
+            model.BCryptHash = BCrypt.Net.BCrypt.HashPassword(model.PlainText);
+
+            return View(model);
         }
 
         public ActionResult About()
