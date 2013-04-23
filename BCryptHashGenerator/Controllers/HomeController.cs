@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using BCryptHashGenerator.Models;
 
 namespace BCryptHashGenerator.Controllers
@@ -28,20 +24,6 @@ namespace BCryptHashGenerator.Controllers
             model.BCryptHash = BCrypt.Net.BCrypt.HashPassword(model.PlainText);
 
             return View(model);
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your app description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }
