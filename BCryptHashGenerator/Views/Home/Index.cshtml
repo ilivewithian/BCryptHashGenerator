@@ -17,7 +17,9 @@
             </li>
             <li>
                 @Html.LabelFor(m => m.BCryptHash)
-                @Html.TextBoxFor(m => m.BCryptHash)
+                <blockquote>
+                    @Model.BCryptHash
+                </blockquote>
             </li>
         </ol>
         <input type="submit" value="Generate Hash" />
