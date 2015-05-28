@@ -8,7 +8,7 @@
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Create Hash</legend>
+        <legend>Calculate BCrypt Hash</legend>
         <ol>
             <li>
                 @Html.LabelFor(m => m.PlainText)
@@ -22,6 +22,6 @@
                 </blockquote>
             </li>
         </ol>
-        <input type="submit" value="Generate Hash" />
+        <input type="submit" value="Generate BCrypt Hash" />
     </fieldset>
 }
