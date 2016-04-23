@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BCryptHashGenerator.Models
 {
     public class HomeModel
     {
-        [Required]
         [Display(Name = "Plain Text")]
         public string PlainText { get; set; }
 

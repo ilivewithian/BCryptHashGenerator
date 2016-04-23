@@ -3,17 +3,13 @@
     ViewBag.Title = "Home Page";
 }
 <h3>Fillin the plain text and you'll get a BCrypt Hash Back:</h3>
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-
+@using (Html.BeginForm("Index", "Home", method: FormMethod.Get)) {
     <fieldset>
         <legend>Calculate BCrypt Hash</legend>
         <ol>
             <li>
                 @Html.LabelFor(m => m.PlainText)
                 @Html.TextBoxFor(m => m.PlainText)
-                @Html.ValidationMessageFor(m => m.PlainText)
             </li>
             <li>
                 @Html.LabelFor(m => m.BCryptHash)
@@ -25,3 +21,15 @@
         <input type="submit" value="Generate BCrypt Hash" />
     </fieldset>
 }
+<h3>Recent Hash Requests</h3>
+<ul class="list-group">
+    @foreach (var item in (HttpContext.Current.Application["RecentItems"] as List<string> ?? new List<string>()))
+    {
+        <li class="list-group-item">
+            <a href="/?PlainText=@Url.Encode(item)">
+                @item
+            </a>
+        </li>
+    }
+</ul>
+

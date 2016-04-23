@@ -1,27 +1,28 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using BCryptHashGenerator.Models;
 
 namespace BCryptHashGenerator.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
-        {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-            return View(new HomeModel());
-        }
-
-        [HttpPost]
+        [HttpGet]
         public ActionResult Index(HomeModel model)
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
-            if (model == null || !ModelState.IsValid)
+            var list = HttpContext.Application["RecentItems"] as List<string> ?? new List<string>();
+            if (!string.IsNullOrEmpty(model.PlainText) && !list.Contains(model.PlainText))
             {
-                return View(new HomeModel());
+                list.Add(model.PlainText);
             }
+            HttpContext.Application["RecentItems"] = list.AsEnumerable().Reverse().Take(10).Reverse().ToList();
 
-            model.BCryptHash = BCrypt.Net.BCrypt.HashPassword(model.PlainText);
+
+            if (!string.IsNullOrEmpty(model.PlainText))
+            {
+                model.BCryptHash = BCrypt.Net.BCrypt.HashPassword(model.PlainText);
+            }
 
             return View(model);
         }
