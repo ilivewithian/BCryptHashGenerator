@@ -1,8 +1,10 @@
 ﻿@model BCryptHashGenerator.Models.HomeModel
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = string.IsNullOrEmpty(Model.PlainText)
+        ? "Home Page"
+        : "BCrypt Hash of " + Html.Encode(Model.PlainText);
 }
-<h3>Fillin the plain text and you'll get a BCrypt Hash Back:</h3>
+<h3>Fill in the plain text and you'll get a BCrypt hash back:</h3>
 @using (Html.BeginForm("Index", "Home", method: FormMethod.Get)) {
     <fieldset>
         <legend>Calculate BCrypt Hash</legend>

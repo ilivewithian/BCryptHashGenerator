@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using BCryptHashGenerator.Models;
+using CryptSharp;
 
 namespace BCryptHashGenerator.Controllers
 {
@@ -20,8 +21,8 @@ namespace BCryptHashGenerator.Controllers
 
 
             if (!string.IsNullOrEmpty(model.PlainText))
-            {
-                model.BCryptHash = BCrypt.Net.BCrypt.HashPassword(model.PlainText);
+            {                
+                model.BCryptHash = Crypter.Blowfish.Crypt(model.PlainText);
             }
 
             return View(model);
