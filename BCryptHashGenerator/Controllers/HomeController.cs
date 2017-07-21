@@ -17,7 +17,8 @@ namespace BCryptHashGenerator.Controllers
             {
                 list.Add(model.PlainText);
             }
-            HttpContext.Application["RecentItems"] = list.AsEnumerable().Reverse().Take(10).Reverse().ToList();
+            HttpContext.Application["RecentItems"] = new List<string>();
+            //HttpContext.Application["RecentItems"] = list.AsEnumerable().Reverse().Take(10).Reverse().ToList();
 
 
             if (!string.IsNullOrEmpty(model.PlainText))
