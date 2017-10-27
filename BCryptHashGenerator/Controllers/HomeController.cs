@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using BCryptHashGenerator.Models;
-using CryptSharp;
 
 namespace BCryptHashGenerator.Controllers
 {
@@ -11,22 +10,21 @@ namespace BCryptHashGenerator.Controllers
         [HttpGet]
         public ActionResult Index(HomeModel model)
         {
+            var uriBuilder = new UriBuilder(new Uri("https://passwordhashing.com/BCrypt"));
 
-            var list = HttpContext.Application["RecentItems"] as List<string> ?? new List<string>();
-            if (!string.IsNullOrEmpty(model.PlainText) && !list.Contains(model.PlainText))
+            var queryString = HttpUtility.ParseQueryString(string.Empty);
+
+            queryString["utm_source"] = "BCHG";
+            queryString["utm_campaign"] = "DomainMigration";
+
+            if (!string.IsNullOrWhiteSpace(model.PlainText))
             {
-                list.Add(model.PlainText);
-            }
-            
-            HttpContext.Application["RecentItems"] = list.AsEnumerable().Reverse().Take(10).Reverse().ToList();
-
-
-            if (!string.IsNullOrEmpty(model.PlainText))
-            {                
-                model.BCryptHash = Crypter.Blowfish.Crypt(model.PlainText);
+                queryString["plainText"] = model.PlainText;
             }
 
-            return View(model);
+            uriBuilder.Query = queryString.ToString();
+
+            return RedirectPermanent(uriBuilder.ToString());
         }
     }
 }
