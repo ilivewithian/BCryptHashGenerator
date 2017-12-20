@@ -16,6 +16,7 @@ namespace BCryptHashGenerator.Controllers
 
             queryString["utm_source"] = "BCHG";
             queryString["utm_campaign"] = "DomainMigration";
+            queryString["utm_medium"] = "redirect";
 
             if (!string.IsNullOrWhiteSpace(model.PlainText))
             {
